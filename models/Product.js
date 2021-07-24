@@ -26,15 +26,24 @@ save=(object)=>{
         return newProduc;
 }
 
-findById= async (id)=>{
-    const product= await products.filter(product => product.id == id)
-    return product;
+findById=  (id)=>{
+    const product=  products.filter(product => product.id == id)
+    if (product !='') {
+        return product;
+    }else{
+        throw 'No existe el ID'
+    }
 }
 
 deleteById = (id)=>{
-   products=products.filter(product => product.id !== id)
-   const json_products=JSON.stringify(products)
-   fs.writeFileSync('data/products.txt',json_products,'utf-8')
+    const findId = this.findById(id)
+   if(findId != ''){
+    products=products.filter(product => product.id !== id)
+    const json_products=JSON.stringify(products)
+    fs.writeFileSync('data/products.txt',json_products,'utf-8')     
+   }else{
+       throw 'No existe el ID'
+   }
   }
 
 getAll= ()=>{
